@@ -410,11 +410,3 @@ TimeTracker uses **containerized testing** to protect your local environment. Te
 ## License
 
 MIT License - See [LICENSE](LICENSE) file for details.
-
-## Support
-
-For questions or issues, please open a GitHub issue.
-
----
-
-**TimeTracker** - Simple, powerful time tracking for developers and teams. 🚀
