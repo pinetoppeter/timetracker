@@ -11,13 +11,14 @@ echo "=== Testing Metadata Persistence Across Sessions ==="
 rm -rf ~/.timetracker
 rm -rf ~/.timetracker_data
 
-# Copy the built binary to the tests directory (if it doesn't exist)
-if [ ! -f /app/tests/ttr ]; then
-    cp /app/ttr /app/tests/ttr
+# The binary should already be in /home/testuser/ttr from Dockerfile
+# If not, try to copy it
+if [ ! -f /home/testuser/ttr ]; then
+    cp /app/ttr /home/testuser/ttr 2>/dev/null || true
 fi
 
 # Make sure we're using the local binary
-TTR_BIN="./ttr"
+TTR_BIN="/home/testuser/ttr"
 
 # Initialize timetracker
 echo "Initializing TimeTracker..."

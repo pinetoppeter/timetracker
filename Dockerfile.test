@@ -30,6 +30,9 @@ RUN adduser -D testuser && \
     mkdir -p /home/testuser && \
     chown testuser:testuser /home/testuser
 
+# Move binary to a location testuser can access
+RUN cp /app/ttr /home/testuser/ttr && chown testuser:testuser /home/testuser/ttr
+
 # Switch to test user
 USER testuser
 ENV HOME /home/testuser
