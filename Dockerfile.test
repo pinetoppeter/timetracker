@@ -1,0 +1,42 @@
+# TimeTracker Test Container
+# Containerized testing environment that isolates tests from the host system
+
+# Use the same Go version as host system for compatibility
+FROM golang:1.25-alpine
+
+# Install dependencies
+RUN apk add --no-cache \
+    bash \
+    git \
+    make \
+    g++ \
+    libc6-compat \
+    binutils
+
+# Set up working directory
+WORKDIR /app
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN go build -o ttr ./cmd/ttr/main.go
+
+# Make test scripts executable (before switching user)
+RUN chmod +x tests/*.sh
+
+# Set up a test user to avoid running as root
+RUN adduser -D testuser && \
+    mkdir -p /home/testuser && \
+    chown testuser:testuser /home/testuser
+
+# Switch to test user
+USER testuser
+ENV HOME /home/testuser
+
+# Set up environment for testing
+ENV TTR_BASE_DIR /home/testuser/.timetracker_test
+ENV TEST_ENVIRONMENT containerized
+
+# Entry point - run all tests by default
+CMD ["./tests/run_all.sh"]
