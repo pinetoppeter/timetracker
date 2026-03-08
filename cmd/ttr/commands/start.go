@@ -15,7 +15,7 @@ func NewStartCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "start [record-name]",
 		Short: "Start a new time tracking session",
-		Long:  "Start a new time tracking session for the day. If a session already exists, it will be resumed. Optionally name the first record.",
+		Long:  "Start a new time tracking session. If an unfinished session already exists, a new record for the current session will be started. Optionally name the record.",
 		Args:  cobra.MaximumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) > 0 {

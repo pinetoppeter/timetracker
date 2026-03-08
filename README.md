@@ -1,15 +1,14 @@
 # TimeTracker CLI 🕒
 
-A comprehensive time tracking tool with shell autocompletion, metadata support, and CSV export.
+A comprehensive time tracking tool with metadata support and CSV export.
 
 ## Features
 
-- **Time Tracking**: Track time with sessions and records
+- **Time Tracking**: Tracks your daily work with a simple cli command
 - **Shell Autocompletion**: Bash and Zsh support for record names in `name`, `switch`, and `start` commands
-- **Metadata Support**: Add custom metadata to records for better organization
+- **Metadata Support**: Add custom metadata to time records for better organization
 - **CSV Export**: Export time data with customizable columns
-- **Record Management**: Name, switch, and manage time records
-- **JSON Schema**: Configurable export schema for custom columns
+- **JSON Schema**: Configurable export schema for custom meta data columns
 
 ## Installation
 
@@ -21,7 +20,7 @@ cd timetracker
 # Build the application
 go build -o ttr ./cmd/ttr/main.go
 
-# Install to your PATH (optional)
+# Install to your PATH
 sudo mv ttr /usr/local/bin/
 ```
 
@@ -35,7 +34,7 @@ ttr setup
 
 This will:
 - Create the configuration file (`~/.timetracker/config.json`) with timezone settings
-- Create the export schema file (`~/.timetracker/export-schema.json`)
+- Create the export schema file (`YOUR_DATA_FOLDER/export-schema.json`)
 - Set up shell autocompletion automatically for Bash or Zsh
 
 ## Usage
@@ -43,11 +42,14 @@ This will:
 ### Basic Commands
 
 ```bash
-# Start a new session
+# Start a new session with an unnamed record
 ttr start
 
-# Name the current record
-ttr name "Project Work"
+# Optionally, start a new session with record named record
+ttr start "Project 1"
+
+# Change the name of the current record
+ttr name "Project XYZ"
 
 # Switch to a new record
 ttr switch "Meeting"
@@ -58,7 +60,7 @@ ttr end
 # Show session information
 ttr info
 
-# Export time data to CSV
+# Export time data for a selected month to CSV
 ttr export
 ```
 
@@ -102,7 +104,7 @@ ttr meta <TAB>        # Shows available record names
 ```
 
 **Automatic Setup:**
-- On first run, TimeTracker automatically:
+- On first run or when running ```ttr setup``` , TimeTracker automatically:
   - Detects your shell (Bash or Zsh)
   - Generates completion script in `~/.timetracker/ttr_completion.bash` (Bash) or `~/.timetracker/ttr_completion.zsh` (Zsh)
   - Adds sourcing command to your shell RC file (`~/.bashrc` or `~/.zshrc`)
@@ -124,14 +126,14 @@ source ~/.zshrc
 
 #### CSV Export
 
-Export your time data with customizable columns:
+Export your entire time data (records) for a selected month:
 
 ```bash
 # Export current month
 ttr export
 
 # Customize export columns by editing the schema
-nano ~/.timetracker/export-schema.json
+nano YOUR_DATA_FOLDER/export-schema.json
 
 # Export includes:
 # - Record names and durations
@@ -147,13 +149,11 @@ The export schema defines which columns appear in CSV exports. By default, TimeT
 
 ```bash
 # Main export schema (empty by default):
-# Location: ~/.timetracker/export-schema.json
+# Location: YOUR_DATA_FOLDER/export-schema.json
 
 # Example schema with common columns:
-# Location: ~/.timetracker/export-schema-example.json
+# Location: YOUR_DATA_FOLDER/export-schema-example.json
 
-# To use the example schema, copy it to the main schema file:
-cp ~/.timetracker/export-schema-example.json ~/.timetracker/export-schema.json
 
 # Example schema content:
 {
@@ -315,7 +315,7 @@ ttr export
 # (Follow prompts for month/year)
 
 # Customize columns by editing schema
-nano ~/.timetracker/export-schema.json
+nano YOUR_DATA_FOLDER/export-schema.json
 
 # Re-export with new columns
 ttr export
@@ -348,19 +348,6 @@ ttr export
    grep "ttr_completion" ~/.zshrc
    ```
 
-4. **Manual setup** (if automatic setup failed):
-   ```bash
-   # Generate completion script
-   ttr completion bash > ~/.timetracker/ttr_completion.bash
-   
-   # For Bash
-   echo "source ~/.timetracker/ttr_completion.bash" >> ~/.bashrc
-   source ~/.bashrc
-   
-   # For Zsh
-   echo "source ~/.timetracker/ttr_completion.zsh" >> ~/.zshrc
-   source ~/.zshrc
-   ```
 
 ## Development
 
@@ -419,25 +406,6 @@ TimeTracker uses **containerized testing** to protect your local environment. Te
 
 ⚠️ **Important:** All testing must be done using the containerized approach (`./run_tests.sh`). Local testing is not supported and may modify your user files.
 
-### Running the Application
-
-```bash
-# Run the application
-ttr start
-```
-
-### Architecture
-
-```
-cmd/ttr/          # CLI commands
-internal/        # Core functionality
-  ├── config/     # Configuration management
-  ├── record/     # Record management
-  ├── session/    # Session management
-  ├── storage/    # File storage
-  └── setup/      # Setup and initialization
-pkg/             # (Future) Libraries
-```
 
 ## License
 
