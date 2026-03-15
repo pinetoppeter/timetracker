@@ -20,6 +20,9 @@ cd timetracker
 # Build the application
 go build -o ttr ./cmd/ttr/main.go
 
+# Alternative: Build via docker 
+docker run --rm -v "$(pwd)":/app -w /app golang:1.25 go build -buildvcs=false -o ttr ./cmd/ttr
+
 # Install to your PATH
 sudo mv ttr /usr/local/bin/
 ```
