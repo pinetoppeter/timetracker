@@ -154,7 +154,7 @@ _ttr_complete() {
     case "$prev" in
         ttr)
             # Complete top-level commands
-            COMPREPLY=($(compgen -W "start pause resume end info export meta name switch setup completion help" -- "$cur"))
+            COMPREPLY=($(compgen -W "start pause resume end info export meta name switch setup schema completion help" -- "$cur"))
             return 0
             ;;
         start|name|switch|meta)
@@ -246,6 +246,7 @@ _ttr_complete() {
         'name'
         'switch'
         'setup'
+        'schema'
         'completion'
         'help'
     )
@@ -358,6 +359,7 @@ Complete documentation is available at https://github.com/pinetoppeter/timetrack
 	rootCmd.AddCommand(commands.NewExportCmd())
 	rootCmd.AddCommand(commands.NewMetaCmd())
 	rootCmd.AddCommand(commands.NewSetupCmd())
+	rootCmd.AddCommand(commands.NewSchemaCmd())
 	rootCmd.AddCommand(commands.NewCompletionCmd())
 
 	// Enable shell completion for record names

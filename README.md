@@ -151,6 +151,9 @@ nano YOUR_DATA_FOLDER/export-schema.json
 The export schema defines which columns appear in CSV exports. By default, TimeTracker creates an empty schema that you can customize. An example file with common column definitions is also provided:
 
 ```bash
+# View all meta fields defined in your schema
+ttr schema list
+
 # Main export schema (empty by default):
 # Location: YOUR_DATA_FOLDER/export-schema.json
 
@@ -258,6 +261,7 @@ YOUR_CUSTOM_DATA_FOLDER/ (e.g., ~/.timetracker_data/ or ~/Documents/TimeTracker/
 | `ttr info` | Show current session information |
 | `ttr export` | Export time data to CSV |
 | `ttr setup` | Initialize configuration files |
+| `ttr schema list` | List all meta fields in the export schema |
 
 ### Metadata Commands
 
